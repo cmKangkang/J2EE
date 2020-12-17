@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>test</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    class CoursePage extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                id:props.id,//学生id
+            }
+        }
+
+        render(){
+            return(
+                <div>
+                    <UserCourse id={this.state.id}/>
+                    <Search id={this.state.id}/>
+                </div>
+            );
+        }
+    }
+
+    //已选课程
+    class UserCourse extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                id:this.props.id,
+                courses:[],//课程数组，存放信息
+            }
+        }
+
+        render(){
+            return(
+                <div className="my-course">
+                    <div className="title">已选课程列表</div>
+                    <div className="course-list">
+                        {this.state.courses.map((el,index)=>{
+                            return (
+                                <CourseItem key={index} cid={el.cID} cname={el.cName} time={el.cDate} tid={el.ctID} tname={el.ctName} type={true}/>
+                            )
+                        })}
+                    </div>
+                </div>
+            );
+        }
+
+        componentDidMount(){
+            // ajax获取课程表数据，将数据存入courses
+            $.ajax({
+                url:"/student/gcl2",
+                type:"post",
+                data:{userID:2018},
+                async:false,
+                success:(ret)=>{//function会改变this的指向，箭头函数不会
+                    alert(ret);
+                    let courses=[];
+                    for (let retKey in ret) {
+                        courses.push((ret[retKey]))
+                    }
+                    this.setState({
+                        courses:courses,
+                    });
+                    alert(this.state.courses.cID);
+                }
+            })
+
+            // axios.post("student/gcl2",{userID:2018}).then(function(res){
+            //     alert("success",res);
+            //     this.setState({
+            //         courses:res
+            //     })
+            // })
+
+            // axios({
+            //     type:"post",
+            //     url:"/student/gcl2",
+            //     data:{userID:2018}
+            // }).then(function(res){
+            //     alert(success);
+            // })
+        }
+    }
+
+    //课程的显示模块
+    class CourseItem extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                cid:props.id,
+                cname:props.cname,
+                tname:props.tname,
+                tid:props.tid,
+                time:props.time,
+                type:props.type,//判断类别，是已加入还是待加入
+            }
+        }
+
+        render(){
+            var elem;
+            if(this.state.type=true)
+                elem=<button onClick={this.deleteCourse}>删除课程</button>;
+            else
+                elem=<button onClick={this.addCourse}>加入课程</button>;
+            return(
+                <div className="course-item">
+                    <p>{this.state.cname}</p>
+                    <p>{this.state.tname}</p>
+                    <p>{this.state.info}</p>
+                    {elem}
+                </div>
+            );
+        }
+
+        deleteCourse=()=>{
+            //ajax,完成删除操作，操作u_c表
+        }
+
+        addCourse=()=>{
+            //ajax，完成加入操作，操作u_c表
+        }
+    }
+
+    class Search extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                id:props.id,
+                key:"",//搜索关键词
+                courses:[],//搜索结果
+            };
+        }
+
+        render(){
+            return(
+                <div className="course-search">
+                    搜索
+                    <div className="search-bar">
+                        <input type="text" value={this.state.key} onChange={this.handleChange}/>
+                        <button onClick={this.doSearch}>搜索</button>
+                    </div>
+                    <div className="result-bar">
+                        {this.state.courses.map((el,index)=>{
+                            return (
+                                <CourseItem key={index} id={this.state.id} cid={el.cID} cname={el.cName} tid={el.ctID} tname={el.ctName} type={false}/>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        }
+
+        handleChange=(event)=>{
+            this.setState({key:event.target.value});
+        }
+
+        doSearch=()=>{
+            //ajax查询结果，返回结果存储到courses
+        }
+
+    }
+
+
+    ReactDOM.render(
+        <CoursePage id={2018}/>,
+        document.getElementById("root")
+    )
+</script>
+</body>
+</html>

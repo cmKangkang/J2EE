@@ -1,0 +1,398 @@
+/*----侧边栏菜单----*/
+/*需要注意的是，代码顺序与变换的顺序要一致*/
+/*如：从透明到显示的变换就要讲透明的样式写在显示的前面*/
+.sidebar_off{
+  float: right;
+  width: 150px;
+  margin-right: -20%;
+  height: 100%;
+  background-color: rgba(245,245,245,0.5);
+  overflow: hidden;
+  transition: 0.5s all;
+  opacity: 0;
+  transition-timing-function: ease;
+}
+
+.sidebar_on{
+  margin-right: 0;
+  margin-left: 10px;
+  border-bottom-left-radius: 2em;
+  border-top-left-radius: 2em;
+  border-radius: 5px;
+  display: block;
+  opacity: 1;
+}
+
+/* body */
+html,body{
+  width:100%;
+  height:100%;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  /* align-content: center; */
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-image: linear-gradient(120deg,#3498db,#5e44ad);
+  color: white;
+}
+
+#root{
+  height: 90%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-list{
+  width:100%;
+  height:96%;
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.course-list::-webkit-scrollbar{
+  display: none;
+}
+
+/*----课程选项按钮---- */
+.cbtn{
+  width:160px;
+  height:120px;
+  border:0px;
+  border-radius: 5px;
+  background-color: rgba(245,245,245,0.5);
+  margin:10px;
+  padding:10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*----提交按钮----*/
+.sub-btn{
+  width:50%;
+  height:40px;
+  border:1px gainsboro;
+  border-radius: 40px;
+  background:linear-gradient(120deg,#3498db,#8e44ad);
+  background-size:200%;
+  transition: 0.5s;
+  color: whitesmoke;
+}
+
+.sub-btn:hover{
+  background-position: right;
+}
+/*--------*/
+.course-info{
+  float:left;
+  width:70%;
+  height:90%;
+}
+
+/* 顶栏 */
+.top-dock{
+  /* height:15%;
+  width:96%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; */
+  width: 100%;
+  height: 15%;
+  background-color: rgba(245,245,245,0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.userzone{
+  display: flex;
+  width:auto;
+  align-items: center;
+}
+.portrait,.nickname{
+  margin:5px;
+}
+
+
+
+/* 主要空间 */
+.main-root{
+  /* display: flex;
+  height:100%;
+  width:100%;
+  justify-content: space-between;
+  align-items: center; */
+  display: flex;
+  width: 100%;
+  height: 80%;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1%;
+}
+
+.maintain{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  /* margin-top: 1%; */
+}
+
+.course-page,.tcourse-page,.user-page{
+  background-color: rgba(245,245,245,0.3);
+  border-radius: 5px;
+  border: 0px;
+  padding:16px;
+}
+
+/* 学生课程部分 */
+.course-page{
+  width: 100%;
+  height:auto;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.user-course{
+  width:60%;
+  height:100%;
+  display: block;
+  float:right;
+
+}
+.search-zone{
+  width:30%;
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgba(245,245,245,0.3);
+  border-radius: 5px;
+}
+.search-bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width:94%;
+}
+.result-bar{
+  display: block;
+  float:left;
+  width:90%;
+}
+.ed-pwd{
+  width:64%;
+  height:90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-y: scroll;
+}
+.ed-pwd::-webkit-scrollbar{
+  display: none;
+}
+
+
+.ed-info{
+  width:64%;
+  height:90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+/*.ed-info h4,.ed-info div,.ed-info button{*/
+/*  margin:20px;*/
+/*}*/
+.ed-info span{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  float:left;
+}
+.uinfo{
+  width:100%;
+  height:60%;
+  border:1px solid #a0b3d6;/*设置边框1px，实线，边框线色为#a0b3d6 */
+  /*width: 500px;*/
+  min-height: 100px;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 4px;
+  color: #333;
+  background-color: white;
+  outline:0; /* 当元素获得焦点的时候，焦点框为0.去掉虚线框（或高亮框）*/
+}
+
+
+/* 老师部分 */
+.tcourse-page{
+  width: 100%;
+  height:auto;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.tcourse-page .title{
+  width:100%;
+}
+
+.my-lecture{
+  width:66%;
+  height:90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content:space-between;
+}
+
+.container{
+  width: 100%;
+  height:85%;
+  display: flex;
+}
+
+.new-course{
+  width:300px;
+  height:90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-items: center;
+  padding: 10px;
+}
+
+/* 用户信息部分 */
+.user-page{
+  width: 100%;
+  height:auto;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+/*输入框*/
+input{
+  width:80%;
+  height:25px;
+  border:1px darkgray solid;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom:20px;
+  margin-top: 20px;
+}
+
+
+.icon{
+  width:25px;
+  height:25px;
+  }
+
+.side-btn{
+  width:40px;
+  height:40px;
+  margin: 20px;
+  transition-property: height;
+  transition: 0.3s;
+  transition-timing-function: ease;
+}
+
+.side-btn:hover{
+  width:70px;
+  height: 70px;
+}
+
+.funcside{
+  width:60%;
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.user-menue{
+  width:30%;
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.menue-icon{
+  width:40px;
+  height:40px;
+  margin:20px;
+}
+.top-dock img{
+  width:35px;
+  height:35px;
+  margin:5px;
+}
+
+.side-menue{
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    align-items: center;
+    justify-content: center;
+}
+/*头像*/
+.head{
+  width:60px;
+  height:60px;
+}
+
+.db-btn-off{
+  width:30%;
+  height:30%;
+  /*border:2px black solid;*/
+  display: none;
+  color:whitesmoke;
+  float:right;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+.db-btn-on{
+  display: inline;
+}
+
+/*----cbtn功能按键，切换状态用----*/
+.cbtn-switch-zone{
+  height:96%;
+  width:5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.cbtn-switch{
+  position: relative;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  bottom: 0;right:0;
+  width:40px;
+  height:40px;
+}
+.cbtn-info{
+  width:75%;
+}
+.cbtn-func{
+  witdth:40px;
+  height:40px;
+}

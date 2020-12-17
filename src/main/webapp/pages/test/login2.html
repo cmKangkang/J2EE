@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>登陆</title>
+    <script src="/js/jquery/jquery-3.3.1.js"></script>
+
+<!--    <script type="text/javascript" src="/js/app/login.js"></script>-->
+    <link rel="stylesheet" href="/css/login-style.css">
+    <scrip src=""></scrip>
+</head>
+
+<body>
+    <div class="container">
+        <div class="tit">
+            <h3>Login</h3>
+        </div>
+        <form id="login-form" action="/user/login" method="post">
+            <div class="acc"><input id="account" type="text" name="userID" placeholder="account" onchange="refresh()"></div>
+            <div class="pas"><input id="password" type="password" name="userPWD" placeholder="password" onchange="refresh()"></div>
+            <div class="btn">
+                <button id="log-in" type="submit">Sign in</button>
+            </div>
+        </form>
+
+        <div class="tips">Do not have an account? <a href="register.html">Sign up</a>.</div>
+    </div>
+
+    <script type="text/javascript">
+        var id;
+        var pwd;
+        function refresh(){
+            id=$(".acc input").val();
+            pwd=$(".pas input").val();
+            console.log(id," , ",pwd,"/n");
+        }
+        function checkLogin(){
+            // var id=$(".acc").val();
+            // var pwd=$(".pas").val();
+            var id=$(".acc input").val();
+            var pwd=$(".pas input").val();
+            console.log("id: ",id);
+            console.log("pwd: ",pwd);
+            if(id==""||pwd==""){
+                alert("账户不能为空！");
+                return;
+            }
+            else{
+                alert("开始登录验证...");
+                $("#login-form").ajax({
+                    type:"POST",
+                    url:"/user/login",
+                    // dataType:"json",
+                    contentType:"application/json;character=utf-8",
+                    // async:true,
+                    data:JSON.stringify({userID:id,userPWD:pwd}),
+                    success:function(data){
+                        if(data)
+                            alert("登陆成功");
+                        else
+                            alert("登陆失败");
+                    }
+                })
+            }
+        }
+    </script>
+<!--    <script>-->
+<!--        $('div input').on('focus',function(){-->
+<!--            $(this).addClass('focus');-->
+<!--        });-->
+<!--        $('div input').on('blur',function(){-->
+<!--            if($(this).val()==="")-->
+<!--                $(this).addClass('focus');-->
+<!--        });-->
+<!--    </script>-->
+</body>
+
+</html>

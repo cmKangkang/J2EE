@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>  
+<html lang="zh-CN">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>demo</title>  
+    <link href="https://vjs.zencdn.net/7.0.3/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.0.3/video.js"></script>
+    <style>
+        .uls{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            text-align: center
+        }
+        .lis{
+            list-style-type: none;
+        }
+    </style>
+</head>
+ 
+<body>
+   <ul class="uls">
+       <li class="lis">
+            <h1>1</h1>
+            <!-- autoplay + muted 自动播放生效 -->
+            <video id="myVideo1" class="video-js vjs-default-skin vjs-big-play-centered" muted controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://yf.ugc.v.cztv.com/cztv/ugcvod/2018/04/14/A98CD7B26B06D94A5CEA56AA7D723572/h264_800k_mp4.mp4_playlist.m3u8"  type="application/x-mpegURL">
+                <!-- <source id="source" src="http://kbs-dokdo.gscdn.com/dokdo_300/_definst_/dokdo_300.stream/playlist.m3u8"  type="application/x-mpegURL">   -->
+                <!-- <source id="source" src="http://kbs-dokdo.gscdn.com/dokdo_300/_definst_/dokdo_300.stream/playlist.m3u8"  type="application/x-mpegURL">     -->
+            </video> 
+       </li>
+       <li class="lis">
+            <h1>2</h1>
+            <video id="myVideo2" class="video-js vjs-default-skin vjs-big-play-centered" muted controls autoplay  preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://kbs-dokdo.gscdn.com/dokdo_300/_definst_/dokdo_300.stream/playlist.m3u8"  type="application/x-mpegURL">    
+            </video>  
+       </li>
+       <li class="lis">
+            <h1>3</h1>
+            <video id="myVideo3" class="video-js vjs-default-skin vjs-big-play-centered"  controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source src="https://vjs.zencdn.net/v/oceans.mp4" type='video/mp4' />   
+            </video> 
+       </li>
+       <li class="lis">
+            <h1>4</h1>
+            <video id="myVideo4" class="video-js vjs-default-skin vjs-big-play-centered"  controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source src="https://vjs.zencdn.net/v/oceans.webm" type='video/webm' />  
+            </video> 
+       </li>
+       <li class="lis">
+            <h1>5</h1>
+            <video id="myVideo5" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://kbs-dokdo.gscdn.com/dokdo_300/_definst_/dokdo_300.stream/playlist.m3u8"  type="application/x-mpegURL">    
+            </video> 
+       </li>
+       <li class="lis">
+            <h1>6</h1>
+            <video id="myVideo6" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://kbs-dokdo.gscdn.com/dokdo_300/_definst_/dokdo_300.stream/playlist.m3u8"  type="application/x-mpegURL">    
+            </video>
+       </li>
+       <li class="lis">
+            <h1>7</h1>
+            <video id="myVideo7" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://kbs-dokdo.gscdn.com/dokdo_300/_definst_/dokdo_300.stream/playlist.m3u8"  type="application/x-mpegURL">    
+            </video>
+       </li>
+       <li class="lis">
+            <h1>8</h1>
+            <video id="myVideo8" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://kbs-dokdo.gscdn.com/dokdo_300/_definst_/dokdo_300.stream/playlist.m3u8"  type="application/x-mpegURL">    
+            </video>
+       </li>
+       <li class="lis">
+            <h1>9</h1>
+            <video id="myVideo9" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"  type="application/x-mpegURL"/>    
+            </video>
+       </li>
+       <li class="lis">
+            <h1>10</h1>
+            <button class="del" onclick="del(10)">销毁</button>
+            <video id="myVideo10" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="auto" width="400" height="300" data-setup='{}'>      
+                <source id="source" src="http://devimages.apple.com/iphone/samples/bipbop/gear3/prog_index.m3u8"  type="application/x-mpegURL">    
+            </video>
+       </li>
+   </ul>
+</body>  
+</html>
+

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<META http-equiv=Content-Type content="text/html;charset=utf-8">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Chatting room</title>
+	<link href="./css/bootstrap.min.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/x-icon" href="./image/vim_shortcut.ico">
+	<link rel="stylesheet" type="text/css" href="./css/mychat.css">
+	<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+	<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+	<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+<!--	<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>-->
+	<script src="./js/jquery-1.11.3.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+<!--	<script src="./js/myjs.js"></script>-->
+</head>
+<body >
+<div id="root"></div>
+</body>
+<script type="text/javascript">
+	function webSocketSession(){
+		var websocket;
+		var Onlineset = new Set();//维护在线人数的容器
+		var mydate = new Date();//时间对象，用于显示时间
+		websocket = new WebSocket("ws://localhost:8080/echo");
+		websocket.onopen = function (evnt) {
+			var name=$("#username").text();
+			websocket.send("a"+name);
+		};
+
+		websocket.onmessage = function (evnt) {
+			var data=evnt.data;
+			//维护在线用户模块
+			if(data[0]=="a") {//用户维护在线用户队列
+				var name=data.slice(2);//获得名字
+				if(data[1]=="1") {//用户下线，维护队列
+					Onlineset.delete(name);
+				}
+				else {//用户上线，维护队列
+					Onlineset.add(name);
+				}
+				// 维护用户列表
+				var listnameset="<div class='list-group-item active'>"+
+						"<h4 class='list-group-item-heading'>在线列表</h4></div>";
+				$("#userlist").html(listnameset);
+				Onlineset.forEach(function (item) {
+					if(item.toString()!=""){
+						var content = "<div class='list-group-item '>"+
+								"<h4 class='list-group-item-heading'>"+
+								"<span class='glyphicon glyphicon-user'></span >"+item.toString()+"</h4></div>";
+
+						$("#userlist").append(content);
+						//添加在线用户到列表中
+					}
+				});
+				//维护在线用户结束
+				return ;
+			}
+			//维护消息发送模块
+			//解析data，获得名字与内容
+			var namelenth=parseInt(data[0]); //获得名字的长度
+			var name=data.slice(1, 1+namelenth);//获得名字
+			var content=data.slice(1+namelenth); //获得消息内容
+			var style = "alert-success";//其他人消息样式
+			var image="stu";
+			var imgTch = "tea";
+			var imgSelf="self";
+			var imgStu="stu";
+			if(name==ctname){
+				style="alert-warning";
+				image=imgTch;
+			}
+			else if(name==$("#username").text()) {
+				//消息来自自己，改变样式
+				style="alert-info";
+				image=imgSelf;
+			}
+			else{
+				image=imgStu;
+			}
+			var message="<li class='meida alert-success "+style+" ' role='alert'><div class='media-left'><img src='./image/"+image+".png' width='30px'"+
+					"style='margin-top: 40%' alt='' class='media-object img-circle '>"+
+					"</div><div class='media-body '><h6 class='meida-heading text-info '>"+name+
+					"&nbsp;&nbsp;"+mydate.toLocaleString()+"</h6>"+"<p ><xmp>"+content+"</xmp></p></div></li>";
+
+			$("#messageList").prepend(message);
+
+		};
+
+
+		websocket.onerror = function (evnt) {
+		};
+		websocket.onclose = function (evnt) {
+		};
+		$("#sendMessage").bind("click", function() {
+			var name=$("#username").text();
+			var a=name.length+name+$("#chat").val();
+			websocket.send(a);
+			$("#chat").val("");//发送消息后清空输入框
+		});
+		$('#chat').bind('keypress',function(event){
+			if(event.keyCode == "13")//回车提交
+			{
+				var name=$("#username").text();
+				var a=name.length+name+$("#chat").val();
+				$("#chat").val("");//发送消息后清空输入框
+				websocket.send(a);
+				return false;//阻止事件广播
+			}
+		});
+	}
+</script>
+<script type="text/babel">
+	class Mychat extends React.Component{
+		constructor(props) {
+			super();
+			this.state={
+				uname:props.uname,
+			}
+		}
+
+		render(){
+			return(
+					<React.Fragment>
+						<div className="top">
+							<img src="./image/chatbubbles-outline.svg" width="20px" height="20px"/>
+							<span id="username">{this.state.uname}</span>
+						</div>
+						<nav className="navbar navbar-fixed-bottom ">
+							<div className="container ">
+								<div className="navbar-header">
+								</div>
+								<form className="navbar-form navbar-left">
+									<div className="form-group " id="bottom-bar">
+										<input type="text" className="form-control " id="chat"/>
+											<button type="button" className="btn alert-info " id="sendMessage">send</button>
+									</div>
+								</form>
+
+							</div>
+					</nav>
+			<div className="container-fluid main">
+				<div className="row">
+					<div className="col-xs-12">
+						<ul className="media-list" id="messageList">
+						</ul>
+					</div>
+					<div className="col-md-3 hidden-xs hidden-sm ">
+						<div className="list-group " id="userlist">
+						</div>
+					</div>
+				</div>
+			</div>
+					</React.Fragment>
+			)
+		}
+	}
+
+	var uname=window.parent.getUname();
+	var ctname=window.parent.getCTname();
+	ReactDOM.render(
+			<Mychat uname={uname}/>,
+			document.getElementById("root")
+		);
+	webSocketSession();
+</script>
+
+</html>
